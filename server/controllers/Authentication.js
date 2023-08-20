@@ -1,10 +1,10 @@
-const User = require("../model/User");
+const {User} = require("../model/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const AuthController = {
   createUser: async (req, res) => {
-    const { fullName, email, password } = req.body;
+    const { fullName, email, password} = req.body;
 
     try {
       const existingUser = await User.findOne({ where: { email } });
@@ -18,13 +18,13 @@ const AuthController = {
         fullName,
         email,
         password: hashedPassword,
-        role: "user",
+        
       });
       console.log(newUser);
       res.status(201).json({ message: "User created successfully" });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error });
     }
   },
   login: async (req, res) => {
